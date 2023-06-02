@@ -1,0 +1,15 @@
+"D:\WorkSoftWare\IAR\arm\bin\armproc.dll" 
+
+"D:\WorkSoftWare\IAR\arm\bin\armstlink2.dll" 
+
+"D:\WorkProject\ECG\EWARM\ECG\Exe\ECG.out" 
+
+--plugin "D:\WorkSoftWare\IAR\arm\bin\armbat.dll" 
+
+--device_macro "D:\WorkSoftWare\IAR\arm\config\debugger\ST\STM32L4xx.dmac" 
+
+--flash_loader "D:\WorkSoftWare\IAR\arm\config\flashloader\ST\FlashSTM32L4xxxG.board" 
+
+
+
+

@@ -1,0 +1,12 @@
+ecg\list.o: ..\FreeRTOS\src\list.c
+ecg\list.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+ecg\list.o: ..\FreeRTOS\include\FreeRTOS.h
+ecg\list.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stddef.h
+ecg\list.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdint.h
+ecg\list.o: ..\FreeRTOS\FreeRTOSConfig.h
+ecg\list.o: ..\FreeRTOS\include\projdefs.h
+ecg\list.o: ..\FreeRTOS\include\portable.h
+ecg\list.o: ..\FreeRTOS\include\deprecated_definitions.h
+ecg\list.o: ..\FreeRTOS\port\RVDS\ARM_CM4F\portmacro.h
+ecg\list.o: ..\FreeRTOS\include\mpu_wrappers.h
+ecg\list.o: ..\FreeRTOS\include\list.h
