@@ -17,20 +17,26 @@ WIFI wifi = {
 	.mqttport = 1883,
 };
 
-char wifi_replybuffer[100];
+char wifi_replybuffer[200];
 char atcmd[100];
 uint8_t wifi_replybufferIndex = 0;
+
+int datalen = 0;
+int heartRate = 0;
+float SDNN = 0;
+float rMSSD = 0;
+float pNN50  = 0;
 
 void WIFI_Init(void)
 {
 	WIFI_MQTT_ConfigUser("ECG_STM32","","");
-	HAL_Delay(500);
+	vTaskDelay(1000);
 	WIFI_MQTT_Connect("47.113.218.238",1883);
-	HAL_Delay(1000);
+	vTaskDelay(1000);
 	WIFI_GetWifiState();
-	HAL_Delay(500);
+	vTaskDelay(1000);
 	WIFI_MQTT_GetState();
-	HAL_Delay(500);
+	vTaskDelay(1000);
 }
 
 /*
@@ -148,7 +154,21 @@ void WIFI_MQTT_PublishStr(char* topic,char* data)
 	sprintf(atcmd,"AT+MQTTPUB=0,\"%s\",\"%s\",0,0\r\n",topic,data);
 	
 	Serial_SendString(huart2,atcmd);
-	WIFI_ReadReply();
+  WIFI_ReadReply();
+}
+/*
+* Function: WIFI_MQTT_Subscribe
+* Brief: Subscribe Topic Num
+* Params:
+*		@topic Subscribe Topic
+* Return: None
+*/
+void WIFI_MQTT_Subscribe(char *topic)
+{
+  sprintf(atcmd,"AT+MQTTSUB=0,\"%s\",0\r\n",topic);
+  
+  Serial_SendString(huart2,atcmd);
+  WIFI_ReadReply();
 }
 /*
 * Function: WIFI_MQTT_PublishData
@@ -160,10 +180,11 @@ void WIFI_MQTT_PublishStr(char* topic,char* data)
 */
 void WIFI_MQTT_PublishNum(char* topic,int data)
 {
-	sprintf(atcmd,"AT+MQTTPUB=0,\"%s\",\"{\"data\":%d}\",0,0\r\n",topic,data);
+	sprintf(atcmd,"AT+MQTTPUB=0,\"%s\",\"{\\\"data\\\":%d}\",0,0\r\n",topic,data);
 	
 	Serial_SendString(huart2,atcmd);
-	WIFI_ReadReply();
+	
+  WIFI_ReadReply();
 }
 /*
 * Function: WIFI_ReadReply
@@ -173,18 +194,26 @@ void WIFI_MQTT_PublishNum(char* topic,int data)
 */
 void WIFI_ReadReply(void)
 {
-	HAL_Delay(500);
+	vTaskDelay(400);
 #ifdef WIFI_DEBUG
 	while(Serial_ReadAvailable(huart2))
-    {
+  {
 		uint8_t data = Serial_ReadChar(huart2);
-		wifi_replybuffer[wifi_replybufferIndex++] = data;;
-	}
-
-	Serial_SendString(hlpuart1,wifi_replybuffer);
+    wifi_replybuffer[wifi_replybufferIndex++] = data;;
+		if(data == '\n'){
+      wifi_replybuffer[wifi_replybufferIndex] = '\0';
+      
+      if(strncasecmp("+MQTTSUBRECV:",wifi_replybuffer,13)==0){//解析数据帧 懒得写复杂了
+        Serial_SendString(hlpuart1,"getdata\r\n");
+        uint8_t paramsnum = sscanf(wifi_replybuffer,"+MQTTSUBRECV:0,\"ECG-data\",%d,{\"heartRate\":%d,\"sdnn\":%f,\"rmssd\":%f,\"pnn50\":%f}",&datalen,&heartRate,&SDNN,&rMSSD,&pNN50);
+        Serial_SendNum(hlpuart1,paramsnum);
+      }
+      
+      Serial_SendString(hlpuart1,wifi_replybuffer);
+      WIFI_Prompt();
+    }
+  }
 #endif
-	WIFI_Prompt();
-
 }
 /*
 * Function: WIFI_Prompt

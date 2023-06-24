@@ -6,7 +6,7 @@
 #include "stdint.h"
 #include "stdio.h"
 
-#define SERIAL_RXSIZE 100
+#define SERIAL_RXSIZE 200
 #define SERIAL_TXSIZE 100
 
 typedef struct{	

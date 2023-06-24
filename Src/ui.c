@@ -11,11 +11,11 @@ void UI_Init()
   OLED_Init();
   
   OLED_Clear();
-  OLED_DrawString(0,0,"122056",ASC2_1206);
+  //OLED_DrawString(0,0,"122056",ASC2_1206);
   OLED_Refresh();
   /* ≥ı ºªØ≤Àµ•¿∏ */
   
-	UI_InitMenu();
+	//UI_InitMenu();
 }
 
 void UI_InitMenu()

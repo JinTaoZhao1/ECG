@@ -50,9 +50,9 @@
 #include "cli.h"
 #include "menuconfig.h"
 #include "ecg.h"
-
 #include "serial.h"
 
+#include "taskmy.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -125,7 +125,7 @@ int main(void)
   /* 启动ADC1校准*/
   HAL_ADCEx_Calibration_Start(&hadc1,ADC_SINGLE_ENDED);
   
-  //AppTaskCreateStart();
+  AppTaskCreateStart();
   //
 	//MenuShow_Load_Shell(NULL);
   //MenuShow_Exit_Shell(NULL);
@@ -138,13 +138,14 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  /*
 	while (1){
     ECG_GetValue();
     Serial_SendNum(hlpuart1,data[0]);
     //WIFI_MQTT_PublishNum("ECG",data[0]);
     //OLED_DrawNumber(0,0,data[0],ASC2_1206);
     HAL_Delay(5);  //采样频率约为500Hz
-  }
+  }*/
 		/*
 		while(Serial_ReadAvailable(huart2))
 		{

@@ -21,6 +21,11 @@ typedef struct {
 
 extern WIFI wifi;
 
+extern int heartRate;
+extern float SDNN;
+extern float rMSSD;
+extern float pNN50;
+
 void WIFI_Init(void);
 
 void WIFI_SetWifiMode(int mode);
@@ -33,6 +38,7 @@ void WIFI_MQTT_GetState(void);
 void WIFI_MQTT_Disconnect(void);
 void WIFI_MQTT_PublishStr(char* topic,char* data);
 void WIFI_MQTT_PublishNum(char* topic,int data);
+void WIFI_MQTT_Subscribe(char *topic);
 
 void WIFI_ReadReply(void);
 void WIFI_Prompt(void);

@@ -59,3 +59,7 @@ ecg\main.o: ../Inc/menuconfig.h
 ecg\main.o: ../Inc/menu.h
 ecg\main.o: ../Inc/img.h
 ecg\main.o: ../Inc/ecg.h
+ecg\main.o: ../Inc/taskmy.h
+ecg\main.o: ../Inc/ui.h
+ecg\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\math.h
+ecg\main.o: D:\Keil5\ARM\ARMCC\Bin\..\include\time.h
